@@ -3,7 +3,6 @@ package home.ivishnyakova.publishing_house;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class ListenersSupport<T> {
     private List<PropertyChangeListener> listeners;
 

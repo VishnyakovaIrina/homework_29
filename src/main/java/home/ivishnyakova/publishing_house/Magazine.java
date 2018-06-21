@@ -13,4 +13,14 @@ public class Magazine extends Edition{
         this.number = number;
         this.frequency = frequency;
     }
+
+    @Override
+    public String toString() {
+        return "Magazine{" +
+                " name='" + name + '\'' +
+                ", releaseDate=" + releaseDate +
+                ", number=" + number +
+                ", frequency=" + frequency +
+                "} ";
+    }
 }

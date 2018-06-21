@@ -1,9 +1,11 @@
 package home.ivishnyakova.publishing_house;
 
+import java.util.Date;
+
 public class Presentation {
-  /*  protected Date date;
+    protected Date date;
     protected String address;
-    protected String nameEdition;*/
+    protected String nameEdition;
     protected String speakers;
 
     public Presentation(String speakers) {
@@ -13,7 +15,10 @@ public class Presentation {
     @Override
     public String toString() {
         return "Presentation{" +
-                "speakers='" + speakers + '\'' +
+                " date=" + date +
+                ", address='" + address + '\'' +
+                ", nameEdition='" + nameEdition + '\'' +
+                ", speakers='" + speakers + '\'' +
                 '}';
     }
 }

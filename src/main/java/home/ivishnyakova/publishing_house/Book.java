@@ -10,4 +10,13 @@ public class Book extends Edition {
         this.series = series;
         this.genre = genre;
     }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                " name='" + name + '\'' +
+                ", series='" + series + '\'' +
+                ", genre='" + genre + '\'' +
+                "}";
+    }
 }
