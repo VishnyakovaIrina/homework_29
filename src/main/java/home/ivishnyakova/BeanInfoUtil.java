@@ -17,7 +17,7 @@ import java.util.Optional;
 * */
 public class BeanInfoUtil {
     //логгер
-    private static final Logger logger = LogManager.getLogger(LoggerUtil.getClassName());
+    //private static final Logger logger = LogManager.getLogger(LoggerUtil.getClassName());
 
     /* Метод getBeanInfoByClass формирует инфо о бине.
     * @param className - имя класса (бина);
@@ -54,13 +54,13 @@ public class BeanInfoUtil {
                 writerOpt.println("--------------------------------------------------------");
             }
         } catch (IntrospectionException e) {
-            logger.error("The introspector could not get bean info",e);
-            //System.out.println("Error: The introspector could not get bean info");
-            //e.printStackTrace();
+            //logger.error("The introspector could not get bean info",e);
+            System.out.println("Error: The introspector could not get bean info");
+            e.printStackTrace();
         } catch (ClassNotFoundException e) {
-            logger.error("The class was not found for the introspector",e);
-            //System.out.println("Error: The class was not found for the introspector");
-            //e.printStackTrace();
+            //logger.error("The class was not found for the introspector",e);
+            System.out.println("Error: The class was not found for the introspector");
+            e.printStackTrace();
         }
         return writerOpt;
     }
@@ -80,9 +80,9 @@ public class BeanInfoUtil {
             encoder.writeObject(beanOpt);
         }
         catch (IOException e){
-            logger.error("The bean was not serialized to XML",e);
-            //System.out.println("Error: The bean was not serialized to XML");
-            //e.printStackTrace();
+            //logger.error("The bean was not serialized to XML",e);
+            System.out.println("Error: The bean was not serialized to XML");
+            e.printStackTrace();
         }
     }
 
@@ -99,8 +99,8 @@ public class BeanInfoUtil {
             return Optional.ofNullable((T)decoder.readObject());
         }
         catch (IOException e){
-            logger.error("The bean was not deserialized from XML",e);
-            //System.out.println("Error: The bean was not deserialized from XML");
+            //logger.error("The bean was not deserialized from XML",e);
+            System.out.println("Error: The bean was not deserialized from XML");
         }
         return Optional.empty();
     }

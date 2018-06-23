@@ -70,18 +70,28 @@ public class Subscriber implements EditionsChangeListener,
         }
     }
 
+    /*Обработка события - изменение свойства издательского дома*/
     @Override
     public <T> void dataWasChanged(T event) {
+        //сохранить событие
         events.add((PublishingHouseEvent) event);
+        //распечатать инфо о событии
         describeEvent((PublishingHouseEvent)event);
     }
 
+    /*Вывод инфо о событии event, которое получил слушатель.
+    * Событие в себе содержит инфо об измененных свойствах бина.*/
     @SuppressWarnings("unchecked")
-    private void describeEvent(PublishingHouseEvent event){
+    private <T> void describeEvent(PublishingHouseEvent event){
+        System.out.println("--------------------------------------------");
         System.out.println("Subscriber " + name + " have got event:");
         event.getOldValue().ifPresent((oldValue)->System.out.println("old value = " + oldValue));
         event.getNewValue().ifPresent((newValue)->System.out.println("new value = " + newValue));
+
+        Optional<T[]> arrOpt = event.getNewValueArr();
+        arrOpt.ifPresent( arr -> {
+                Arrays.stream(arr).forEach(System.out::println);
+                }
+        );
     }
-
-
 }
