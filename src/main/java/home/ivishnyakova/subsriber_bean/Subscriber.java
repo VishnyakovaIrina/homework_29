@@ -6,23 +6,27 @@ import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Stream;
 
-public class Subscriber implements EditionsChangeListener, PresentationsChangeListener,
+/*Класс Subscriber представляет собой подписчика издательского дома.
+ *Подписчик может подписаться на события об изменениях инфо о книгах,
+ *журналах, а также презентаций, которые проводит издательский дом.
+ * Подписчик также может покупать печатные издания.
+ **/
+public class Subscriber implements EditionsChangeListener,
+        PresentationsChangeListener,
         Serializable{
 
-    private String name;
+    private String name;    //имя пользователя
 
+    //список событий, которые отследил пользователь
     private List<PublishingHouseEvent> events;
 
+    //купленные книги
     private List<Edition> boughtEditions;
-    private List<Presentation> attendedPresentations;
 
     public Subscriber() {
         this.name = "default subscriber";
         events = new ArrayList<>();
-
         boughtEditions = new ArrayList<>();
-
-        attendedPresentations = new ArrayList<>();
     }
 
     public Subscriber(String name) {
@@ -66,22 +70,10 @@ public class Subscriber implements EditionsChangeListener, PresentationsChangeLi
         }
     }
 
-    public void setAttendedPresentations(Presentation presentation){
-        attendedPresentations.add(presentation);
-    }
-
-    /*public Stream<Edition> getBoughtEditionsStream() {
-        return boughtEditions.stream();
-    }*/
-
-    public Stream<Presentation> getAttendedPresentationsStream() {
-        return attendedPresentations.stream();
-    }
-
     @Override
-    public void dataWasChanged(PublishingHouseEvent event) {
-        events.add(event);
-        describeEvent(event);
+    public <T> void dataWasChanged(T event) {
+        events.add((PublishingHouseEvent) event);
+        describeEvent((PublishingHouseEvent)event);
     }
 
     @SuppressWarnings("unchecked")

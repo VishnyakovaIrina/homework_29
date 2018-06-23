@@ -1,17 +1,20 @@
 package home.ivishnyakova.publishing_house;
 
-import java.util.Date;
+import java.time.LocalDate;
 
+/* Класс Magazine представляет собой журнал.
+* */
 public class Magazine extends Edition{
-    protected Date releaseDate;
-    protected byte number;
-    protected PublishFrequency frequency;
+    private LocalDate releaseDate;      //дата выпуска
+    private byte number;                //номер по порядку
+    private PublishFrequency frequency; //частота выхода журнала
 
-    public Magazine(String name, Date releaseDate, byte number, PublishFrequency frequency) {
+    public Magazine() {
+        super();
+    }
+
+    public Magazine(String name) {
         super(name);
-        this.releaseDate = releaseDate;
-        this.number = number;
-        this.frequency = frequency;
     }
 
     @Override

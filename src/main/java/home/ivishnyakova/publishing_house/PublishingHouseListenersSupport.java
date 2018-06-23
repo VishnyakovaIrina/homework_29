@@ -1,17 +1,36 @@
 package home.ivishnyakova.publishing_house;
 
 public class PublishingHouseListenersSupport {
+    private PublishingHouseBean publishingHouseBean;
 
     private ListenersSupport<Presentation> presentationsChangeListeners;
     private ListenersSupport<Edition> editionsChangeListeners;
     private ListenersSupport<String> addressChangeListeners;
 
-    public PublishingHouseListenersSupport(){
+    public PublishingHouseListenersSupport(PublishingHouseBean publishingHouseBean){
 
         presentationsChangeListeners = new ListenersSupport<>();
         editionsChangeListeners = new ListenersSupport<>();
         addressChangeListeners = new ListenersSupport<>();
 
+        this.publishingHouseBean = publishingHouseBean;
+
+    }
+
+    public void fireAddressChangeListener(String oldValue, String newValue){
+        addressChangeListeners.fireChangeListenerSupport(oldValue,newValue);
+    }
+    public void fireEditionsChangeListener(Edition oldValue, Edition newValue){
+        editionsChangeListeners.fireChangeListenerSupport(oldValue,newValue);
+    }
+    public void firePresentationsChangeListener(Presentation oldValue, Presentation newValue){
+        presentationsChangeListeners.fireChangeListenerSupport(oldValue,newValue);
+    }
+    public void fireEditionsChangeListener(Edition[] newValue){
+        editionsChangeListeners.fireChangeListenerSupport(newValue);
+    }
+    public void firePresentationsChangeListener(Presentation[] newValue){
+        presentationsChangeListeners.fireChangeListenerSupport(newValue);
     }
 
     public void addEditionsChangeListener(PropertyChangeListener listener){
@@ -38,17 +57,6 @@ public class PublishingHouseListenersSupport {
         removePropertyChangeListener(addressChangeListeners, listener);
     }
 
-    public ListenersSupport<Presentation> getPresentationsChangeListeners() {
-        return presentationsChangeListeners;
-    }
-
-    public ListenersSupport<Edition> getEditionsChangeListeners() {
-        return editionsChangeListeners;
-    }
-
-    public ListenersSupport<String> getAddressChangeListeners() {
-        return addressChangeListeners;
-    }
 
     private <T> void addPropertyChangeListener(ListenersSupport<T> listeners, PropertyChangeListener listener){
         try {

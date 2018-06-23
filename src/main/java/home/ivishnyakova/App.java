@@ -3,24 +3,23 @@ package home.ivishnyakova;
 import home.ivishnyakova.publishing_house.*;
 import home.ivishnyakova.subsriber_bean.Subscriber;
 
-import java.beans.BeanInfo;
-import java.beans.IntrospectionException;
-import java.beans.Introspector;
-import java.beans.PropertyDescriptor;
+import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 /**
- * Hello world!
+ * Задание 29.
+ * Создать бины.  Один бин публикует свои доступные методы по шаблону,
+ * второй - с использованием интерфейса BeanInfo.
  *
+ *@author Вишнякова И.
+ * Дата 23/06/18
  */
 public class App 
 {
     public static void main( String[] args )  {
         PublishingHouseBean publishingHouseBean = new PublishingHouseBean();
-        PublishingHouseListenersSupport listenersSupport = publishingHouseBean.getListenersSupport();
+        final PublishingHouseListenersSupport listenersSupport = publishingHouseBean.getListenersSupport();
 
         Subscriber user1 = new Subscriber("user1");
         listenersSupport.addEditionsChangeListener(user1);
@@ -44,9 +43,12 @@ public class App
         publishingHouseBean.setName("Addison-Wesley");
         publishingHouseBean.setAddress("USA, Boston");
 
-        publishingHouseBean.setEditions(Arrays.asList(new Edition("Peter Pen"),new Edition("Treasure Island")));
-        publishingHouseBean.setEditions(1, new Edition("Mary Poppins"));
-        publishingHouseBean.setEditions(2, new Edition("Tom Sawyer"));
+        publishingHouseBean.setEditions(new Edition[]
+                {new Edition("Peter Pen"),
+                 new Edition("Treasure Island")
+                });
+        publishingHouseBean.setEditions(0, new Edition("Mary Poppins"));
+        publishingHouseBean.setEditions(1, new Edition("Tom Sawyer"));
 
         publishingHouseBean.setAddress("USA, Boston, Massachusetts");
 
@@ -65,22 +67,23 @@ public class App
                 }
         );
 
-        try {
-            Class<?> c = Class.forName("home.ivishnyakova.subsriber_bean.Subscriber");
-            BeanInfo beanInfo = Introspector.getBeanInfo(c);
-            PropertyDescriptor[] propertyDescriptors =  beanInfo.getPropertyDescriptors();
-            for(PropertyDescriptor descriptor : propertyDescriptors){
-                System.out.println(descriptor);
-            }
-        } catch (IntrospectionException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
 
-        user1.setBoughtEditions(0, new Magazine("My family", new Date(0L),(byte)7, PublishFrequency.MONTH));
+        user1.setBoughtEditions(0, new Magazine("My family"));
         for (Edition edition : user1.getBoughtEditions()) {
             System.out.println(edition);
         }
+
+        PrintWriter writer = new PrintWriter(System.out);
+
+        writer.println("Bean info about class \"Subscriber\"");
+        writer = BeanInfoUtil.getBeanInfoByClass("home.ivishnyakova.subsriber_bean.Subscriber", writer);
+
+        writer.println("Bean info about class \"PublishingHouseBean\"");
+        writer = BeanInfoUtil.getBeanInfoByClass("home.ivishnyakova.publishing_house.PublishingHouseBean", writer);
+        writer.flush();
+
+        BeanInfoUtil.serializeBeanToXML(publishingHouseBean, "/resources/publishing_house.xml");
+
+
     }
 }

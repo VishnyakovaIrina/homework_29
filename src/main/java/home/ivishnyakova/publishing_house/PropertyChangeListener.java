@@ -2,6 +2,9 @@ package home.ivishnyakova.publishing_house;
 
 import java.util.EventListener;
 
+/*Интерфейс PropertyChangeListener содержит метод dataWasChanged,
+ *который вызывается слушателями при наступлении события -
+ * изменение значения свойства*/
 public interface PropertyChangeListener extends EventListener {
-    void dataWasChanged(PublishingHouseEvent event);
+    <T> void dataWasChanged(T event);
 }
